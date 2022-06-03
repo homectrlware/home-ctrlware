@@ -1,0 +1,35 @@
+Query to create user table : 
+
+CREATE TABLE `user` (
+  `name` varchar(100) NOT NULL,
+  `username` varchar(100) NOT NULL,
+  `password` varchar(100) NOT NULL
+);
+
++------+----------+----------+
+| name | username | password |
++------+----------+----------+
+
+
+
+Query to create data table : 
+
+CREATE TABLE `data` (
+  `serial` varchar(20) NOT NULL,
+  `username` varchar(100) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `value1` int(11) NOT NULL,
+  `value2` int(11) NOT NULL
+);
+
++--------+----------+------+-------------------+------------------+
+| serial | username | name |       value1      |      value2      |
++--------+----------+------+-------------------+------------------+
+| switch |          |      |    0(OFF)/1(ON)   |         -        |
++--------+----------+------+-------------------+------------------+
+| door   |          |      | 0(UNLOCK)/1(LOCK) | 0(OPEN)/1(CLOSE) |
++--------+----------+------+-------------------+------------------+
+| sensor |          |      |    sensor value   |         -        |
++--------+----------+------+-------------------+------------------+
+| fan    |          |      |    0(OFF)/1(ON)   |    SPEED(1-5)    |
++--------+----------+------+-------------------+------------------+

@@ -1,0 +1,87 @@
+<html>
+    <head>
+        <title>Home Ctrlware</title>
+        <link rel="stylesheet" href="style.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@600&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <div class="ribbon" id="user_name">this is a header</div>
+        <div id="blank">this is  blank</div>
+        <section id="widget_holder">
+        </section>
+        <button id="dashboard_add_device" onclick="add_device()">+/-</button>
+    </body>
+    <script>
+        var this_url_string = window.location.href;
+        var this_url = new URL(this_url_string);
+        var username = this_url.searchParams.get("username");
+        
+        var get_user_name_url = "./get_user_name.php?username="+username;
+        var http2 = new XMLHttpRequest();
+        http2.open("GET",get_user_name_url);
+        http2.onreadystatechange = function() {
+            if(this.readyState==4 && this.status==200){
+                document.getElementById("user_name").innerHTML="Hello "+String(http2.responseText);
+            }
+        }
+        http2.send();
+
+        var get_list_url = "./get_device_list.php?username="+username;
+        var http = new XMLHttpRequest();
+        http.open("GET",get_list_url);
+        http.onreadystatechange = function() {
+            if(this.readyState==4 && this.status==200){
+                var res = String(http.responseText);
+        //console.log(res)
+        var serial = res.split(" ");
+        for (let index = 0; index < serial.length; index++) {
+            var code = serial[index];
+            var type = code.substr(0,3);
+            if( type == "swt"){
+                var url = "./widgets/switch.html?serial="+code;
+                var iframe = document.createElement('iframe');
+                iframe.classList.add("widgets");
+                iframe.src = url;
+                iframe.frameBorder="0";
+                document.getElementById("widget_holder").appendChild(iframe);
+            }
+            else if( type == "sen"){
+                var url = "./widgets/sensor.html?serial="+code;
+                var iframe = document.createElement('iframe');
+                iframe.classList.add("widgets");
+                iframe.src = url;
+                iframe.frameBorder="0";
+                document.getElementById("widget_holder").appendChild(iframe);
+            }
+            else if( type == "dor"){
+                var url = "./widgets/door.html?serial="+code;
+                var iframe = document.createElement('iframe');
+                iframe.classList.add("widgets");
+                iframe.src = url;
+                iframe.frameBorder="0";
+                document.getElementById("widget_holder").appendChild(iframe);
+            }
+            else if( type == "fan"){
+                var url = "./widgets/fan.html?serial="+code;
+                var iframe = document.createElement('iframe');
+                iframe.classList.add("widgets");
+                iframe.src = url;
+                iframe.frameBorder="0";
+                document.getElementById("widget_holder").appendChild(iframe);
+            }
+        }
+            }
+        }
+        http.send();
+        function add_device() {
+            window.location.href = "./device.html?username="+username;
+        }
+        var uri = window.location.toString();
+        if (uri.indexOf("?") > 0) {
+            var clean_uri = uri.substring(0, uri.indexOf("?"));
+            window.history.replaceState({}, document.title, clean_uri);
+        }
+    </script>
+</html>

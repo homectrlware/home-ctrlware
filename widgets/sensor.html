@@ -1,0 +1,78 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="widgets_style.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@600&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <div class="container">
+            <div id="top_name">This is an example Name</div>
+            <table>
+                <tr>
+                    <td>
+                        <div class="text" id="sensor_value1"></div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </body>
+    <script>
+        
+        var url_string = window.location.href;
+        var url = new URL(url_string);
+        var serial = url.searchParams.get("serial");
+        var int_check = serial.substring(3,7);
+        var flag;
+        console.log(int_check);
+        if (parseInt(int_check)%2 == 0){
+            flag = 1;
+        }
+        else {
+            flag = 0;
+        }
+        console.log(flag);
+        var http = new XMLHttpRequest();
+        var url_request_data = "./get_name.php?serial="+serial;
+        http.open("GET",url_request_data);
+        http.send();
+        http.onreadystatechange = function() {
+            if(this.readyState==4 && this.status==200){
+                document.getElementById("top_name").innerHTML=http.responseText;
+            }
+        }
+        function update(){
+            var http = new XMLHttpRequest();
+            var http = new XMLHttpRequest();
+            var url_request_data = "./data_get.php?serial="+serial;
+            http.open("GET",url_request_data);
+            http.onreadystatechange = function() {
+                if(this.readyState==4 && this.status==200){
+                    var result = http.responseText;
+                    console.log(flag);
+                    if(flag == 0){
+                        document.getElementById("sensor_value1").innerHTML=result+" C";
+                        document.getElementById("sensor_value1").style.color="white";
+                    }
+                    else{
+                        if(result == "1"){
+                            document.getElementById("sensor_value1").innerHTML="safe";
+                            document.getElementById("sensor_value1").style.color="green";
+                        }
+                        else{
+                            document.getElementById("sensor_value1").innerHTML="Smoke detected";
+                            document.getElementById("sensor_value1").style.color="red";
+                        }
+                    }
+                }    
+            }
+            http.send();;
+        }
+        var uri = window.location.toString();
+        if (uri.indexOf("?") > 0) {
+            var clean_uri = uri.substring(0, uri.indexOf("?"));
+            window.history.replaceState({}, document.title, clean_uri);
+        }
+        setInterval(update,100);
+    </script>
+</html>

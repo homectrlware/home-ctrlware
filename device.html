@@ -1,0 +1,65 @@
+<html>
+    <head>
+        <title>Home Ctrlware</title>
+        <link rel="stylesheet" href="style.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@600&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <div class="name">Home <bdi style="color: #003EFF">Ctrlware</bdi></div>
+        <div class="black_content_holder" style="height: fit_content;">
+            <input type="text" class="data_in" id="serial" placeholder="serial Code">
+            <input type="text" class="data_in"id="device_name" placeholder="Name (Only to add device)">
+            <button class="btn" class="data_in" id="add_device" onclick="device_add()">ADD DEVICE</button>
+            <button class="btn" class="data_in" id="device_remove" onclick="device_remove()">REMOVE DEVICE</button>
+        </div>
+    </body>
+    <script>
+        var this_url_string = window.location.href;
+        var this_url = new URL(this_url_string);
+        var username = this_url.searchParams.get("username");
+
+        function device_add() {
+            var serial = document.getElementById("serial").value;
+            var name = document.getElementById("device_name").value;
+            var url = "./device_add.php?username="+username+"&name="+name+"&serial="+serial;
+            var http = new XMLHttpRequest();
+            http.open("GET",url);
+            http.onreadystatechange = function () {
+                if(this.readyState==4 && this.status==200){
+                    if(http.responseText == "good"){
+                        window.location.href = "./dashboard.html?username="+username;
+                    }
+                    else{
+                        console.log("error at add device");
+                    }
+                }
+            }
+            http.send();
+        }
+        function device_remove() {
+            var serial = document.getElementById("serial").value;
+            var url = "./device_remove.php?serial="+serial;
+            var http = new XMLHttpRequest();
+            http.open("GET",url,false);
+            http.onreadystatechange = function () {
+                if(this.readyState==4 && this.status==200){
+                    if(http.responseText == "good"){
+                        window.location.href = "./dashboard.html?username="+username;
+                    }
+                    else{
+                        console.log("error at add device");
+                    }
+                }
+            }
+            http.send();
+        }
+        var uri = window.location.toString();
+        if (uri.indexOf("?") > 0) {
+            var clean_uri = uri.substring(0, uri.indexOf("?"));
+            window.history.replaceState({}, document.title, clean_uri);
+        }
+
+    </script>
+</html>

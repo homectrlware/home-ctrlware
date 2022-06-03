@@ -1,0 +1,44 @@
+<html>
+    <head>
+        <title>Home Ctrlware</title>
+        <link rel="stylesheet" href="style.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@600&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <div class="name">Home <bdi style="color: #003EFF">Ctrlware</bdi></div>
+        <div class="black_content_holder">
+            <input type="text" name="" class="data_in" placeholder="Username" id="uname">
+            <input type="password" name="" class="data_in" placeholder="Password" id="pass">
+            <button class="btn" id="login" onclick="authenticate()">LOGIN</button>
+            <button class="btn" id="index_signup" onclick="signup()">SIGN UP</button>
+        </div>
+    </body>
+    <script>
+        // authenticate
+        function authenticate() {
+            var username = document.getElementById("uname").value;
+            var password = document.getElementById("pass").value;
+            var url = "./authenticate.php?username="+username+"&password="+password;
+            var http = new XMLHttpRequest();
+            http.open("GET",url);
+            http.onreadystatechange= function() {
+                if(this.readyState==4 && this.status==200){
+                    var result = http.responseText;
+                    if(result == "good"){
+                        window.location.href = "./dashboard.html?username="+String(username);
+                    }
+                }
+                else{
+                    document.getElementById("uname").value = "";
+                    document.getElementById("pass").value = "";
+                }
+            }
+            http.send();            
+        }
+        function signup() {
+            window.location.href = "./signup.html";
+        }
+    </script>
+</html>

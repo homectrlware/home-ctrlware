@@ -1,0 +1,82 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="widgets_style.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@600&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <div class="container">
+            <div id="top_name">This is an example Name</div>
+            <table>
+                <tr>
+                    <td>
+                        <button class="ctrl_btn" id="lock" onclick="door_lock(1)">LOCK</button><br><br><br>
+                        <button class="ctrl_btn" id="unlock" onclick="door_lock(0)">UNLOCK</button>
+                    </td>
+                    <td>
+                        <div class="text">DOOR:</div><br>
+                        <div class="text" id="door_value1">UNLOCKED</div>
+                        <div class="text" id="door_value2">OPEN</div><br>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </body>
+    <script>
+        var url_string = window.location.href;
+        var url = new URL(url_string);
+        var serial = url.searchParams.get("serial");
+        var http = new XMLHttpRequest();
+        var http = new XMLHttpRequest();
+        var url_request_data = "./get_name.php?serial="+serial;
+        http.open("GET",url_request_data);
+        http.send();
+        http.onreadystatechange = function() {
+            if(this.readyState==4 && this.status==200){
+                document.getElementById("top_name").innerHTML=http.responseText;
+            }
+        }
+        function update(){
+            var http = new XMLHttpRequest();
+            var http = new XMLHttpRequest();
+            var url_request_data = "./data_get.php?serial="+serial;
+            http.open("GET",url_request_data);
+            http.send();
+            http.onreadystatechange = function() {
+                if(this.readyState==4 && this.status==200){
+                    var result = String(http.responseText);
+                    var value = result.split(" ");
+                    if(Number(value[0]>0)){
+                        document.getElementById("door_value1").innerHTML="LOCKED";
+                        document.getElementById("door_value1").style.color="green";
+                    }
+                    else{
+                        document.getElementById("door_value1").innerHTML="UNLOCKED";
+                        document.getElementById("door_value1").style.color="red";
+                    }
+                    if(Number(value[1]>0)){
+                        document.getElementById("door_value2").innerHTML="CLOSED";
+                        document.getElementById("door_value2").style.color="green";
+                    }
+                    else{
+                        document.getElementById("door_value2").innerHTML="OPEN";
+                        document.getElementById("door_value2").style.color="red";
+                    }
+                }
+            }
+        }
+        function door_lock(value1){
+            var url = "./data_update.php?serial="+serial+"&value1="+value1;
+            var http = new XMLHttpRequest();
+            http.open("GET",url);
+            http.send();
+        }
+        var uri = window.location.toString();
+        if (uri.indexOf("?") > 0) {
+            var clean_uri = uri.substring(0, uri.indexOf("?"));
+            window.history.replaceState({}, document.title, clean_uri);
+        }
+        setInterval(update,100);
+    </script>
+</html>

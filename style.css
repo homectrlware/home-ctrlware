@@ -1,0 +1,164 @@
+* {
+    font-family: 'JetBrains Mono', monospace;
+    /*font-family: 'Courier New', Courier, monospace;*/
+    color: #003EFF;
+}
+body {
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-attachment: initial;
+    background-image: linear-gradient(#ffffff,#003EFF,#000000);
+}
+.name {
+    width: 100%;
+    height: fit-content;
+    text-align: center;
+    color: #000;
+    font-size: 7em;
+    padding: 0%;
+}
+.black_content_holder {
+    background-color: #000000;
+    border-radius: 100px;
+    margin: auto;
+    height: 60%;
+    width: 75%;
+    position: absolute;
+    top: 15%;
+    left: 12.5%;
+    box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+}
+#index_error {
+    background-color: #003EFF;
+    color: #003EFF;
+    font-size: 40px;
+    text-align: center;
+    height: 10%;
+    width: 80%;
+    position: relative;
+    border: 0ch;
+    top: 35%; left: 10%;
+}
+.data_in {
+    background-color: #ffffff;
+    color: #000000;
+    height: 10%;
+    width: 80%;
+    position: relative;
+    border: 0ch;
+
+}
+input, input::placeholder {
+    font-size: 1.5em;
+    line-height: 2em;
+}
+#uname {
+    top: 15%; left: 10%;
+}
+#pass {
+    top: 20%; left: 10%;
+}
+/* signup page input element*/
+#email {
+    top:10%; left: 10%;
+}
+#name {
+    top: 15%; left: 10%;
+}
+#set_pass {
+    top: 20%; left: 10%;
+}
+/* add device elements*/
+#serial {
+    top:10%; left: 10%;
+}
+#device_name {
+    top: 15%; left: 10%;
+}
+
+.btn {
+    background-color: #003EFF;
+    color: #ffffff;
+    height: 10%;
+    width: 80%;
+    position: relative;
+    font-size: 2em;
+    border: 0ch;
+    border-radius: 90px;
+    box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+
+}
+#login {
+    top: 25%; left: 10%;
+}
+#index_signup {
+    top: 30%; left: 10%;
+}
+#signup_signup {
+    top: 35%; left: 10%;
+}
+#add_device {
+    top: 25%; left: 10%;
+}
+#device_remove {
+    top: 30%; left: 10%;
+}
+#dashboard_add_device {
+    border: 0px;
+    color: #000000;
+    font-size: 70px;
+    padding: 0px;
+    height: 170px;
+    width: 170px;
+    border-radius: 780px;
+    position: fixed;
+    bottom: 60px;
+    right: 60px;
+    box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+    background-color: #ffffff;
+}
+
+.ribbon {
+    background-color: #000000;
+    color: #ffffff;
+    font-size: 4em;
+    height: 6%;
+    width: 100%;
+    left: 0%;
+    position: fixed;
+    top: 0%;
+}
+
+.widgets {
+    color: #000;
+    width: 100%;
+    margin-top: 5%;
+    margin-left: 0%;
+    display: flex;
+    flex-direction: column;
+    aspect-ratio: 16/9;
+    padding: 0%;
+
+}
+#blank {
+    height: 5%;
+    width: 100%;
+    
+}
+#widget_holder {
+    width: 100%;
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(600px, 1fr));
+}
+
+#prompt {
+    color: #ffffff;
+    position: relative;
+    text-align: center;
+    height: 10%;
+    width: 80%;
+    font-size: 30px;
+    top: 20%;
+    left: 10%;
+}

@@ -1,0 +1,102 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="widgets_style.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@600&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <div class="container">
+            <div id="top_name">This is an example Name</div>
+            <table>
+                <tr>
+                    <td><button class="ctrl_btn" id="fan_on" onclick="action_fan('on')">ON</button></td>
+                    <td><button class="ctrl_btn" id="fan_off" onclick="action_fan('off')">OFF</button></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <button class="ctrl_btn" id="fan_min" onclick="action_fan('minus')">-</button>
+                        <div class="text" id="fan_value2">OFF</div>
+                        <button class="ctrl_btn" id="fan_max" onclick="action_fan('plus')">+</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </body>
+    <script>
+        
+        var url_string = window.location.href;
+        var url = new URL(url_string);
+        var serial = url.searchParams.get("serial");
+        var http = new XMLHttpRequest();
+        var http = new XMLHttpRequest();
+        var url_request_data = "./get_name.php?serial="+serial;
+        http.open("GET",url_request_data);
+        http.send();
+        http.onreadystatechange = function() {
+            if(this.readyState==4 && this.status==200){
+                document.getElementById("top_name").innerHTML=http.responseText;
+            }
+        }
+        function update(){
+            var http = new XMLHttpRequest();
+            var http = new XMLHttpRequest();
+            var url_request_data = "./data_get.php?serial="+serial;
+            http.open("GET",url_request_data);
+            http.send();
+            http.onreadystatechange = function() {
+                if(this.readyState==4 && this.status==200){
+                    var result = String(http.responseText);
+                    var value = result.split(" ");
+                    if(Number(value[0]>0)){
+                        document.getElementById("fan_value2").innerHTML=value[1];
+                        document.getElementById("fan_value2").style.color="green";
+                    }
+                    else{
+                        document.getElementById("fan_value2").innerHTML="OFF";
+                        document.getElementById("fan_value2").style.color="red";
+                    }
+                }
+                
+            }
+        }
+        function action_fan(button_pressed){
+            console.log(button_pressed);
+            var status = document.getElementById("fan_value2").innerHTML;
+            console.log(status);
+            if (status =="OFF" && button_pressed=="on"){
+                //turn on the fan to 1
+                value1=1;
+                value2=1;
+            }
+            else if(Number(status)>0 && button_pressed=="off") {
+                //turn off the fan
+                value1=0;
+                value2=0;
+            }
+            else if(Number(status)<5 && button_pressed=="plus"){
+                //increase fan speed
+                value1=1;
+                value2=Number(status)+1;
+            }
+            else if(Number(status)>1 && button_pressed=="minus"){
+                //decrease fan speed
+                value1=1;
+                value2=Number(status)-1;
+            }
+            else{
+                return;
+            }
+            var url = "./data_update.php?serial="+serial+"&value1="+value1+"&value2="+value2;
+            var http = new XMLHttpRequest();
+            http.open("GET",url);
+            http.send();
+        }
+        var uri = window.location.toString();
+        if (uri.indexOf("?") > 0) {
+            var clean_uri = uri.substring(0, uri.indexOf("?"));
+            window.history.replaceState({}, document.title, clean_uri);
+        }
+        setInterval(update,100);
+    </script>
+</html>

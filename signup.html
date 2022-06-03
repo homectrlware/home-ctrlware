@@ -1,0 +1,39 @@
+<html>
+    <head>
+        <title>Home Ctrlware</title>
+        <link rel="stylesheet" href="style.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@600&display=swap" rel="stylesheet">
+    </head>
+    <body>
+            <div class="name">Home <bdi style="color: #003EFF">Ctrlware</bdi></div>
+            <div class="black_content_holder">
+                <input type="email" class="data_in" id="email" placeholder="E-Mail/Username">
+                <input type="text" class="data_in"id="name" placeholder="Name">
+                <input type="password" class="data_in" id="set_pass" placeholder="Password">
+                <button class="btn" class="data_in" id="signup_signup" onclick="to_dash()">SIGN UP</button>
+            </div>
+    </body>
+    <script>
+        function to_dash() {
+            var username = document.getElementById('email').value;
+            var name = document.getElementById('name').value;
+            var password = document.getElementById('set_pass').value;
+            var http = new XMLHttpRequest();
+            var url = "./new_user.php?username="+username+"&name="+name+"&password="+password;
+            http.open("GET",url,false);
+            http.onreadystatechange = function() {
+                if(this.readyState==4 && this.status==200){
+                    if(http.responseText == "good"){
+                        window.location.href = "./dashboard.html?username="+username;
+                    }
+                    else{
+                        console.log("error at sign up");
+                    }
+                }
+            }
+            http.send();  
+        }
+    </script>
+</html>
